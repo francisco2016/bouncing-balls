@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.util.ArrayList; //-------------------------------------------------- 0100
-
+import java.util.Random; // ----------------------------------------------------- 0100
 /**
  * Class BallDemo - a short demonstration showing animation with the 
  * Canvas class. 
@@ -29,16 +29,25 @@ public class BallDemo
         int ground = 400;   // position of the ground line
 
         myCanvas.setVisible(true);
+        Random aleatorio = new Random(); //-- para que la posición colores y radio sean aleatorios.---------- 0100
         // draw the ground
         myCanvas.drawLine(50, ground, 550, ground);
         //---0100 creamos una coleccion de objetos BouncingBall() que llamamos bolas.//-----------------------0100
         ArrayList<BouncingBall> bolas = new ArrayList<>(); //-------------------------------------------------0100
-        int posicion = 50;
+        
+        Color[] colores = new Color[3];
+        colores[0] = Color.BLUE;//-------------------------------------------------0100
+        colores[1] = Color.YELLOW;//-------------------------------------------------0100
+        colores[2] = Color.RED;//-------------------------------------------------0100
         // crate and show the balls
         //creamos un bucle para ir asignando bolas a la colección. -------------------------------------------0100
 
         for(int i = 0; i < numBolas; i++){//-----------------------------------------------------------------0100
-            bolas.add(new BouncingBall(50, 50, 16, Color.BLUE, ground, myCanvas));
+            int numColor = aleatorio.nextInt(colores.length);//-------------------------------------------------0100
+            int posicion = aleatorio.nextInt(150);//-------------------------------------------------0100
+            int radio = aleatorio.nextInt(30);//-------------------------------------------------0100
+          // bolas.add(new BouncingBall(50, 50, 16, Color.BLUE, ground, myCanvas));
+            bolas.add(new BouncingBall(posicion, posicion, radio, colores[numColor], ground, myCanvas));
             bolas.get(i).draw();
         }
 
