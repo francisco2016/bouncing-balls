@@ -66,4 +66,61 @@ public class BallDemo
           // stop once ball has travelled a certain distance on x axis
         }
     }
+    
+    /**
+     * Metodo que genera bolas dentro de un rectangulo.
+     */
+    public void boxBounce(int numbolas)
+    {
+        Random aleatorio = new Random();
+        myCanvas.setVisible(true);
+        //para dibujar es triángulo
+        myCanvas.drawLine(50, 50, 550, 50);// (50 d x y 50 de y) y (550 d x y 50 de y)
+        myCanvas.drawLine(550, 50, 550, 400);//barra derecha 550
+        myCanvas.drawLine(550, 400, 50, 400);//suelo 400
+        myCanvas.drawLine(50, 400, 50, 50);  //izquierda 500
+
+        ArrayList<BoxBall> bolas = new ArrayList<>();
+        for (int cont = 0; cont < numbolas; cont++)
+        {
+            int diametro = aleatorio.nextInt(25)+ 5;//calcula el diametro 
+            Color colorA = new Color(aleatorio.nextInt(255),aleatorio.nextInt(255),aleatorio.nextInt(255));
+
+            int ladx = aleatorio.nextInt(2);//elige al direccion aleatoriamente entre 0 y 2
+            int lady = aleatorio.nextInt(2);
+            if (ladx == 0)
+            {
+                ladx = -1;
+            }
+            if (lady == 0)
+            {
+                lady = -1;
+            }
+
+            int posInix = aleatorio.nextInt(500);
+            int posIniy = aleatorio.nextInt(350);
+            if(posInix < 50)
+            {
+                posInix = 100;
+            }
+            if(posIniy < 50)
+            {
+                posIniy = 100;
+            }
+            //creamos la  bola
+            bolas.add(new BoxBall(posInix, posIniy, diametro, colorA, 
+                    400, 50, 50, 550, 
+                    ladx, lady, myCanvas));
+            bolas.get(cont).draw();
+        }
+
+        while(true)
+        {
+            myCanvas.wait(50);           // small delay hace que se pare la bola durante un instante
+            for (int cont = 0;cont<numbolas;cont++)
+            {
+                bolas.get(cont).move();
+            }
+        }
+    }
 }
